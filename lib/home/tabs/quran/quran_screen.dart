@@ -3,9 +3,17 @@ import 'package:islamy/model/dat_lists.dart';
 
 import '../../../core/utils/app_color.dart';
 
-class QuranScreen extends StatelessWidget {
-  const QuranScreen({super.key});
-  final List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+class QuranScreen extends StatefulWidget {
+  QuranScreen({super.key});
+
+  @override
+  State<QuranScreen> createState() => _QuranScreenState();
+}
+
+class _QuranScreenState extends State<QuranScreen> {
+  bool show = true;
+  List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,6 +28,7 @@ class QuranScreen extends StatelessWidget {
           children: [
             Center(child: Image.asset("assets/images/Logo.png")),
             TextField(
+              onChanged: (value) => _runFilter(value),
               decoration: InputDecoration(
                 prefixIcon: const ImageIcon(
                   AssetImage("assets/icons/Quran_Search.png"),
@@ -39,70 +48,73 @@ class QuranScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text("Most Recent"),
+           if (show) Text("Most Recent"),
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 130,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: AppColor.primarycolor,
-                        borderRadius: BorderRadius.circular(20)),
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Column(
-                          children: [
-                            Text(
-                              "Sura English ",
-                              style: TextStyle(color: AppColor.black),
-                            ),
-                            Text("Sura Arabic ",
-                                style: TextStyle(color: AppColor.black)),
-                            Text("546 Verses ",
-                                style: TextStyle(color: AppColor.black)),
-                          ],
-                        ),
-                        Image.asset("assets/images/Sura_image.png")
-                      ],
+            Visibility(
+              visible: show,
+              child: SizedBox(
+                height: 130,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.primarycolor,
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Column(
+                            children: [
+                              Text(
+                                "Sura English ",
+                                style: TextStyle(color: AppColor.black),
+                              ),
+                              Text("Sura Arabic ",
+                                  style: TextStyle(color: AppColor.black)),
+                              Text("546 Verses ",
+                                  style: TextStyle(color: AppColor.black)),
+                            ],
+                          ),
+                          Image.asset("assets/images/Sura_image.png")
+                        ],
+                      ),
                     ),
-                  ),
-    const SizedBox(width: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: AppColor.primarycolor,
-                        borderRadius: BorderRadius.circular(20)),
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Column(
-                          children: [
-                            Text(
-                              "Sura English ",
-                              style: TextStyle(color: AppColor.black),
-                            ),
-                            Text("Sura Arabic ",
-                                style: TextStyle(color: AppColor.black)),
-                            Text("546 Verses ",
-                                style: TextStyle(color: AppColor.black)),
-                          ],
-                        ),
-                        Image.asset("assets/images/Sura_image.png")
-                      ],
-                    ),
-                  )
-                ],
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.primarycolor,
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Column(
+                            children: [
+                              Text(
+                                "Sura English ",
+                                style: TextStyle(color: AppColor.black),
+                              ),
+                              Text("Sura Arabic ",
+                                  style: TextStyle(color: AppColor.black)),
+                              Text("546 Verses ",
+                                  style: TextStyle(color: AppColor.black)),
+                            ],
+                          ),
+                          Image.asset("assets/images/Sura_image.png")
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
-            const Text("Suras List"),
-            const SizedBox(height: 15),
+            if (show) const Text("Suras List"),
+            if (show)  const SizedBox(height: 15),
             Expanded(
                 child: ListView.builder(
               itemCount: quranSurahs.length,
@@ -126,8 +138,24 @@ class QuranScreen extends StatelessWidget {
                 );
               },
               padding: const EdgeInsets.all(0),
-            ))
+            )),
           ],
         ));
+  }
+
+  void _runFilter(String enteredKeyword) {
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      quranSurahs = DatLists.quranSurahs;
+      show = true;
+    } else {
+      final keyword = enteredKeyword.toLowerCase();
+      quranSurahs = quranSurahs.where((sura) {
+        return sura["englishName"].toLowerCase().contains(keyword) ||
+            sura["arabicName"].toLowerCase().contains(keyword);
+      }).toList();
+      show = false;
+    }
+    setState(() {});
   }
 }

@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> currentTab = [
-      const QuranScreen(),
+       QuranScreen(),
       const HadithScreen(),
       const SephaScreen(),
       const RadioScreen(),
