@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:islamy/model/dat_lists.dart';
+import 'package:islamy/home/tabs/quran/sura_screen.dart';
+import 'package:islamy/model/suras_list.dart';
 
 import '../../../core/utils/app_color.dart';
 
@@ -12,7 +13,12 @@ class QuranScreen extends StatefulWidget {
 
 class _QuranScreenState extends State<QuranScreen> {
   bool show = true;
-  List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+
+  //List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+  List arabicQuranSuras = SurasList.arabicQuranSuras;
+  List englishQuranSurahs = SurasList.englishQuranSurahs;
+  List AyaNumber = SurasList.AyaNumber;
+  List suraNumber = SurasList.suraNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class _QuranScreenState extends State<QuranScreen> {
             const SizedBox(
               height: 20,
             ),
-           if (show) Text("Most Recent"),
+            if (show) Text("Most Recent"),
             const SizedBox(
               height: 10,
             ),
@@ -114,26 +120,36 @@ class _QuranScreenState extends State<QuranScreen> {
             ),
             const SizedBox(height: 10),
             if (show) const Text("Suras List"),
-            if (show)  const SizedBox(height: 15),
+            if (show) const SizedBox(height: 15),
             Expanded(
                 child: ListView.builder(
-              itemCount: quranSurahs.length,
+              itemCount: AyaNumber.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SuraScreen(
+                                  arabicTitle: arabicQuranSuras[index],
+                                  englishTitle: englishQuranSurahs[index],
+                                  number: suraNumber[index],
+                                )));
+                  },
                   leading: Stack(alignment: Alignment.center, children: [
                     Image.asset(
                       "assets/icons/Surra_num.png",
                       height: 40,
                     ),
-                    Text("${quranSurahs[index]["number"]}")
+                    Text("${suraNumber[index]}")
                   ]),
                   title: Text(
-                    "${quranSurahs[index]["englishName"]}",
+                    "${englishQuranSurahs[index]}",
                     style: const TextStyle(fontSize: 20),
                   ),
-                  subtitle: Text("${quranSurahs[index]["verses"]} Verses",
+                  subtitle: Text("${AyaNumber[index]} Verses",
                       style: const TextStyle(fontSize: 14)),
-                  trailing: Text("${quranSurahs[index]["arabicName"]}",
+                  trailing: Text("${arabicQuranSuras[index]}",
                       style: const TextStyle(fontSize: 20)),
                 );
               },
@@ -145,17 +161,34 @@ class _QuranScreenState extends State<QuranScreen> {
 
   void _runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      quranSurahs = DatLists.quranSurahs;
+      arabicQuranSuras = SurasList.arabicQuranSuras;
+      englishQuranSurahs = SurasList.englishQuranSurahs;
+      AyaNumber = SurasList.AyaNumber;
+      suraNumber = SurasList.suraNumber;
       show = true;
     } else {
+      List FilterdarabicQuranSuras = [];
+      List FilterdenglishQuranSurahs = [];
+      List FilterdAyaNumber = [];
+      List FilterdsuraNumber = [];
       final keyword = enteredKeyword.toLowerCase();
-      quranSurahs = quranSurahs.where((sura) {
-        return sura["englishName"].toLowerCase().contains(keyword) ||
-            sura["arabicName"].toLowerCase().contains(keyword);
-      }).toList();
+      for (int i = 0; i < SurasList.englishQuranSurahs.length; i++) {
+        if (SurasList.englishQuranSurahs[i].toLowerCase().contains(keyword) ||
+            SurasList.arabicQuranSuras[i].toLowerCase().contains(keyword)) {
+          FilterdarabicQuranSuras.add(SurasList.arabicQuranSuras[i]);
+          FilterdenglishQuranSurahs.add(SurasList.englishQuranSurahs[i]);
+          FilterdAyaNumber.add(SurasList.AyaNumber[i]);
+          FilterdsuraNumber.add(SurasList.suraNumber[i]);
+        }
+      }
+      arabicQuranSuras = FilterdarabicQuranSuras;
+      englishQuranSurahs = FilterdenglishQuranSurahs;
+      AyaNumber = FilterdAyaNumber;
+      suraNumber = FilterdsuraNumber;
+      print(suraNumber);
       show = false;
     }
+
     setState(() {});
   }
 }
