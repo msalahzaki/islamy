@@ -6,7 +6,7 @@ class RadioScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/RadioBG.png'), // Your image file
               fit: BoxFit.cover),

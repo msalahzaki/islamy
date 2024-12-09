@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islamy/intro_screen.dart';
 
 import 'core/utils/app_theme.dart';
 import 'home/home.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       darkTheme: AppTheme.draktheme,
       theme: ThemeData.dark(),
-      home: const Home(),
+      home: const IntroScreen(),
     );
   }
 }

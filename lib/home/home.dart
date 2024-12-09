@@ -14,23 +14,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int selectedndex = 0;
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     List<Widget> currentTab = [
-       QuranScreen(),
+      const QuranScreen(),
       const HadithScreen(),
       const SephaScreen(),
       const RadioScreen(),
       const TimeScreen()
     ];
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          currentIndex: selectedndex,
+          currentIndex: selectedIndex,
           backgroundColor: AppColor.primarycolor,
           onTap: (index) {
-            selectedndex = index;
+            selectedIndex = index;
             setState(() {});
           },
           selectedItemColor: AppColor.white,
@@ -39,30 +40,27 @@ class _HomeState extends State<Home> {
           showSelectedLabels: true,
           items: [
             BottomNavigationBarItem(
-                icon: imageicon(0, "assets/icons/Quran_icon.png"),
+                icon: imageIcon(0, "assets/icons/Quran_icon.png"),
                 label: "Quran"),
-             BottomNavigationBarItem(
-                icon: imageicon(1,"assets/icons/Hadith_icon.png"),
+            BottomNavigationBarItem(
+                icon: imageIcon(1, "assets/icons/Hadith_icon.png"),
                 label: "Hadith"),
-             BottomNavigationBarItem(
-                icon:imageicon(2,"assets/icons/Sebha_icon.png"),
-
+            BottomNavigationBarItem(
+                icon: imageIcon(2, "assets/icons/Sebha_icon.png"),
                 label: "Sepha"),
-             BottomNavigationBarItem(
-                icon: imageicon(3,"assets/icons/Radio_icon.png"),
-
+            BottomNavigationBarItem(
+                icon: imageIcon(3, "assets/icons/Radio_icon.png"),
                 label: "Radio"),
-             BottomNavigationBarItem(
-                icon:imageicon(4,"assets/icons/Time_icon.png"),
-
+            BottomNavigationBarItem(
+                icon: imageIcon(4, "assets/icons/Time_icon.png"),
                 label: "Time"),
           ]),
-      body: currentTab[selectedndex],
+      body: currentTab[selectedIndex],
     );
   }
 
-  Widget imageicon(int itemIndex, String iconPath) {
-    return itemIndex == selectedndex
+  Widget imageIcon(int itemIndex, String iconPath) {
+    return itemIndex == selectedIndex
         ? Container(
             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
             decoration: BoxDecoration(

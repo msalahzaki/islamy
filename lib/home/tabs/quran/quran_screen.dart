@@ -4,8 +4,8 @@ import 'package:islamy/model/dat_lists.dart';
 import '../../../core/utils/app_color.dart';
 
 class QuranScreen extends StatelessWidget {
-   QuranScreen({super.key});
-  List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+  const QuranScreen({super.key});
+  final List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +26,11 @@ class QuranScreen extends StatelessWidget {
                   color: AppColor.primarycolor,
                 ),
                 hintText: "Sura Name",
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                        color: AppColor.primarycolor, width: 2)),
+                focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                         color: AppColor.primarycolor, width: 2)),
@@ -39,65 +43,89 @@ class QuranScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(  height: 130,
-              child:
-                ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColor.primarycolor,
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Column(
-                            children: [
-                              Text(
-                                "Sura English ",
-                                style: TextStyle(color: AppColor.black),
-                              ),
-                              Text("Sura Arabic ",
-                                  style: TextStyle(color: AppColor.black)),
-                              Text("546 Verses ",
-                                  style: TextStyle(color: AppColor.black)),
-                            ],
-                          ),
-                          Image.asset("assets/images/Sura_image.png")
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-
+            SizedBox(
+              height: 130,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.primarycolor,
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Column(
+                          children: [
+                            Text(
+                              "Sura English ",
+                              style: TextStyle(color: AppColor.black),
+                            ),
+                            Text("Sura Arabic ",
+                                style: TextStyle(color: AppColor.black)),
+                            Text("546 Verses ",
+                                style: TextStyle(color: AppColor.black)),
+                          ],
+                        ),
+                        Image.asset("assets/images/Sura_image.png")
+                      ],
+                    ),
+                  ),
+    const SizedBox(width: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.primarycolor,
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Column(
+                          children: [
+                            Text(
+                              "Sura English ",
+                              style: TextStyle(color: AppColor.black),
+                            ),
+                            Text("Sura Arabic ",
+                                style: TextStyle(color: AppColor.black)),
+                            Text("546 Verses ",
+                                style: TextStyle(color: AppColor.black)),
+                          ],
+                        ),
+                        Image.asset("assets/images/Sura_image.png")
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Text("Suras List"),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Expanded(
                 child: ListView.builder(
-                  itemCount: quranSurahs.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Stack(alignment: Alignment.center, children: [
-                        Image.asset(
-                          "assets/icons/Surra_num.png",
-                          height: 40,
-                        ),
-                        Text("${quranSurahs[index]["number"]}")
-                      ]),
-                      title:Text ("${quranSurahs[index]["englishName"]}",style: TextStyle(fontSize: 20),),
-                      subtitle: Text ("${quranSurahs[index]["verses"]} Verses" ,style: TextStyle(fontSize: 14)),
-                      trailing: Text("${quranSurahs[index]["arabicName"]}",style: TextStyle(fontSize: 20)),
-                    );
-                         },
-              padding: EdgeInsets.all(0),
-
+              itemCount: quranSurahs.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Stack(alignment: Alignment.center, children: [
+                    Image.asset(
+                      "assets/icons/Surra_num.png",
+                      height: 40,
+                    ),
+                    Text("${quranSurahs[index]["number"]}")
+                  ]),
+                  title: Text(
+                    "${quranSurahs[index]["englishName"]}",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  subtitle: Text("${quranSurahs[index]["verses"]} Verses",
+                      style: const TextStyle(fontSize: 14)),
+                  trailing: Text("${quranSurahs[index]["arabicName"]}",
+                      style: const TextStyle(fontSize: 20)),
+                );
+              },
+              padding: const EdgeInsets.all(0),
             ))
           ],
         ));
