@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islamy/intro_screen.dart';
 
 import 'core/utils/app_theme.dart';
-import 'home/home.dart';
+
 
 void main() {
   runApp(const MyApp());

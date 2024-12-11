@@ -14,7 +14,7 @@ class QuranScreen extends StatefulWidget {
 class _QuranScreenState extends State<QuranScreen> {
   bool show = true;
 
-  //List<Map<String, dynamic>> quranSurahs = DatLists.quranSurahs;
+
   List arabicQuranSuras = SurasList.arabicQuranSuras;
   List englishQuranSurahs = SurasList.englishQuranSurahs;
   List AyaNumber = SurasList.AyaNumber;
@@ -185,7 +185,6 @@ class _QuranScreenState extends State<QuranScreen> {
       englishQuranSurahs = FilterdenglishQuranSurahs;
       AyaNumber = FilterdAyaNumber;
       suraNumber = FilterdsuraNumber;
-      print(suraNumber);
       show = false;
     }
 

@@ -19,7 +19,6 @@ class SuraScreen extends StatefulWidget {
 
 class _SuraScreenState extends State<SuraScreen> {
   late String content;
-
   @override
   void initState() {
     super.initState();
@@ -29,6 +28,7 @@ class _SuraScreenState extends State<SuraScreen> {
 
   @override
   Widget build(BuildContext context) {
+Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,40 +43,40 @@ class _SuraScreenState extends State<SuraScreen> {
           Align(
               alignment: Alignment.bottomCenter,
               child: Image.asset("assets/images/SuraScreen/tail.png")),
-          const Align(
+          Align(
             alignment: Alignment.topRight,
             child: ImageIcon(
-              AssetImage("assets/images/SuraScreen/Right.png"),
-              size: 100,
+              const AssetImage("assets/images/SuraScreen/Right.png"),
+              size: size.width*0.2 ,
               color: AppColor.primarycolor,
             ),
           ),
-          const Align(
+           Align(
             alignment: Alignment.topLeft,
             child: ImageIcon(
               AssetImage("assets/images/SuraScreen/left.png"),
-              size: 100,
+              size: size.width*0.2 ,
               color: AppColor.primarycolor,
             ),
           ),
           Column(
             children: [
               SizedBox(
-                height: 50,
+                height: size.height*.02,
               ),
               Text(
                 widget.arabicTitle,
                 style: TextStyle(color: AppColor.primarycolor, fontSize: 20),
               ),
               SizedBox(
-                height: 50,
+                height: size.height*.02,
               ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                      child: Text(
+                      child: Text( textAlign: TextAlign.justify,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
                               color: AppColor.primarycolor, fontSize: 16),
@@ -101,7 +101,7 @@ class _SuraScreenState extends State<SuraScreen> {
 
       // Process all lines
       for (var line in lines) {
-        content += "${line.trim()} ( $i ) ";
+        content += "${line.trim()} ($i) ";
         i++;
       }
 // Print the final concatenated content
