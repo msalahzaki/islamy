@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:islamy/home/tabs/quran/sura_screen.dart';
+import 'package:islamy/home/tabs/quran/widgets/recent_suras.dart';
+import 'package:islamy/home/tabs/quran/widgets/sura_list_tile.dart';
+import 'package:islamy/model/sura_model.dart';
 import 'package:islamy/model/suras_list.dart';
 
 import '../../../core/utils/app_color.dart';
@@ -12,13 +15,9 @@ class QuranScreen extends StatefulWidget {
 }
 
 class _QuranScreenState extends State<QuranScreen> {
+  String keyword ='';
   bool show = true;
 
-
-  List arabicQuranSuras = SurasList.arabicQuranSuras;
-  List englishQuranSurahs = SurasList.englishQuranSurahs;
-  List AyaNumber = SurasList.AyaNumber;
-  List suraNumber = SurasList.suraNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,12 @@ class _QuranScreenState extends State<QuranScreen> {
           children: [
             Center(child: Image.asset("assets/images/Logo.png")),
             TextField(
-              onChanged: (value) => _runFilter(value),
+              onChanged: (value) {
+                keyword = value;
+                value.isEmpty ? show=true :show=false ;
+                setState(() {
+                });
+              },
               decoration: InputDecoration(
                 prefixIcon: const ImageIcon(
                   AssetImage("assets/icons/Quran_Search.png"),
@@ -58,100 +62,21 @@ class _QuranScreenState extends State<QuranScreen> {
             const SizedBox(
               height: 10,
             ),
-            Visibility(
-              visible: show,
-              child: SizedBox(
-                height: 130,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColor.primarycolor,
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Column(
-                            children: [
-                              Text(
-                                "Sura English ",
-                                style: TextStyle(color: AppColor.black),
-                              ),
-                              Text("Sura Arabic ",
-                                  style: TextStyle(color: AppColor.black)),
-                              Text("546 Verses ",
-                                  style: TextStyle(color: AppColor.black)),
-                            ],
-                          ),
-                          Image.asset("assets/images/Sura_image.png")
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColor.primarycolor,
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Column(
-                            children: [
-                              Text(
-                                "Sura English ",
-                                style: TextStyle(color: AppColor.black),
-                              ),
-                              Text("Sura Arabic ",
-                                  style: TextStyle(color: AppColor.black)),
-                              Text("546 Verses ",
-                                  style: TextStyle(color: AppColor.black)),
-                            ],
-                          ),
-                          Image.asset("assets/images/Sura_image.png")
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            RecentSuras(isVisable: show),
             const SizedBox(height: 10),
             if (show) const Text("Suras List"),
             if (show) const SizedBox(height: 15),
             Expanded(
                 child: ListView.builder(
-              itemCount: AyaNumber.length,
+              itemCount: SuraModel.getItemCount(),
               itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SuraScreen(
-                                  arabicTitle: arabicQuranSuras[index],
-                                  englishTitle: englishQuranSurahs[index],
-                                  number: suraNumber[index],
-                                )));
-                  },
-                  leading: Stack(alignment: Alignment.center, children: [
-                    Image.asset(
-                      "assets/icons/Surra_num.png",
-                      height: 40,
-                    ),
-                    Text("${suraNumber[index]}")
-                  ]),
-                  title: Text(
-                    "${englishQuranSurahs[index]}",
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  subtitle: Text("${AyaNumber[index]} Verses",
-                      style: const TextStyle(fontSize: 14)),
-                  trailing: Text("${arabicQuranSuras[index]}",
-                      style: const TextStyle(fontSize: 20)),
-                );
+               if ( SuraModel.getSuraModel(index).englishName.toLowerCase().contains(keyword) ||
+                   SuraModel.getSuraModel(index).arabicName.toLowerCase().contains(keyword))
+                   {
+               return SuraListTile(sura: SuraModel.getSuraModel(index));
+               }
+                else
+                return SizedBox.shrink() ;
               },
               padding: const EdgeInsets.all(0),
             )),
@@ -159,35 +84,4 @@ class _QuranScreenState extends State<QuranScreen> {
         ));
   }
 
-  void _runFilter(String enteredKeyword) {
-    if (enteredKeyword.isEmpty) {
-      arabicQuranSuras = SurasList.arabicQuranSuras;
-      englishQuranSurahs = SurasList.englishQuranSurahs;
-      AyaNumber = SurasList.AyaNumber;
-      suraNumber = SurasList.suraNumber;
-      show = true;
-    } else {
-      List FilterdarabicQuranSuras = [];
-      List FilterdenglishQuranSurahs = [];
-      List FilterdAyaNumber = [];
-      List FilterdsuraNumber = [];
-      final keyword = enteredKeyword.toLowerCase();
-      for (int i = 0; i < SurasList.englishQuranSurahs.length; i++) {
-        if (SurasList.englishQuranSurahs[i].toLowerCase().contains(keyword) ||
-            SurasList.arabicQuranSuras[i].toLowerCase().contains(keyword)) {
-          FilterdarabicQuranSuras.add(SurasList.arabicQuranSuras[i]);
-          FilterdenglishQuranSurahs.add(SurasList.englishQuranSurahs[i]);
-          FilterdAyaNumber.add(SurasList.AyaNumber[i]);
-          FilterdsuraNumber.add(SurasList.suraNumber[i]);
-        }
-      }
-      arabicQuranSuras = FilterdarabicQuranSuras;
-      englishQuranSurahs = FilterdenglishQuranSurahs;
-      AyaNumber = FilterdAyaNumber;
-      suraNumber = FilterdsuraNumber;
-      show = false;
-    }
-
-    setState(() {});
-  }
 }
