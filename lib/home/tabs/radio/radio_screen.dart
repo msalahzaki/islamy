@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:islamy/core/utils/app_color.dart';
 import 'package:islamy/home/tabs/radio/widget/channel_card.dart';
 
@@ -11,14 +14,30 @@ class RadioScreen extends StatefulWidget {
 }
 
 class _RadioScreenState extends State<RadioScreen> {
+  List<dynamic> radios = [];
+  String url = '';
   int selected = 0;
+  int playedIndex = -1;
+  int mutedIndex = -1;
   final player = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRadios();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    player.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(selected);
-
+    Size size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -28,7 +47,9 @@ class _RadioScreenState extends State<RadioScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset("assets/images/Logo.png"),
+          SizedBox(
+              height: size.height * .25,
+              child: Image.asset("assets/images/Logo.png")),
           const SizedBox(
             height: 20,
           ),
@@ -56,15 +77,19 @@ class _RadioScreenState extends State<RadioScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: selected == 1
-                        ? AppColor.primarycolor
-                        : AppColor.semiblack,
-                    foregroundColor:
-                        selected == 1 ? AppColor.black : AppColor.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.symmetric(horizontal: 70)),
-                child: const Text("Reciters", style: TextStyle(fontSize: 20)),
+                  backgroundColor: selected == 1
+                      ? AppColor.primarycolor
+                      : AppColor.semiblack,
+                  foregroundColor:
+                      selected == 1 ? AppColor.black : AppColor.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  padding: const EdgeInsets.symmetric(horizontal: 70),
+                ),
+                child: const Text(
+                  "Reciters",
+                  style: TextStyle(fontSize: 20),
+                ),
                 onPressed: () {
                   selected = 1;
                   setState(() {});
@@ -73,26 +98,61 @@ class _RadioScreenState extends State<RadioScreen> {
             ],
           ),
           Expanded(
-              child: ListView(padding: EdgeInsets.symmetric(vertical: 20),itemExtent: 120,
-            children: [
-              ChannelCard(playPuaseFuction: playPuaseFuction,volumeFuction: volumeFuction),
-              ChannelCard(playPuaseFuction: playPuaseFuction,volumeFuction: volumeFuction),
-              ChannelCard(playPuaseFuction: playPuaseFuction,volumeFuction: volumeFuction),
-              ChannelCard(playPuaseFuction: playPuaseFuction,volumeFuction: volumeFuction),
-
-
-            ],
-          ))
+            child: radios.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(
+                    color: AppColor.primarycolor,
+                  ))
+                : ListView.builder(
+                    itemCount: radios.length,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    itemExtent: 150,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ChannelCard(
+                        title: "${radios[index]['name']}",
+                        index: index,
+                        playPuaseFuction: playPuaseFuction,
+                        volumeFuction: volumeFuction,
+                        playicon: (playedIndex == index)
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                      );
+                    },
+                  ),
+          )
         ],
       ),
     );
   }
-  playPuaseFuction(){
-    player.play(UrlSource('https://backup.qurango.net/radio/ibrahim_alakdar'));
-   // player.pause();
 
+  playPuaseFuction(int index) {
+    if (!(index == playedIndex)) {
+      player.stop();
+      player.play(UrlSource(radios[index]['url']));
+      playedIndex = index;
+    } else {
+      player.stop();
+      playedIndex = -1;
+    }
+    setState(() {});
   }
-  volumeFuction(){
-    player.setVolume(0) ;
+
+  volumeFuction(index) {
+    if ((index == playedIndex)) {
+      player.volume == 0 ? player.setVolume(1) : player.setVolume(0);
+    }
+  }
+
+  Future<void> fetchRadios() async {
+    final response = await http
+        .get(Uri.parse('https://mp3quran.net/api/v3/radios?language=ar'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        radios = jsonDecode(response.body)['radios'];
+      });
+    } else {
+      throw Exception('Failed to load radios');
+    }
   }
 }
