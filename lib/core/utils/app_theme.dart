@@ -13,5 +13,12 @@ class AppTheme {
       centerTitle: true,
       iconTheme: IconThemeData(color: AppColor.primarycolor),
     ),
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        iconSize: WidgetStateProperty.all(50),
+        foregroundColor: WidgetStateProperty.all(AppColor.black)
+      )
+    )
+
   );
 }

@@ -3,7 +3,7 @@ import 'package:islamy/core/utils/app_color.dart';
 import 'package:islamy/home/tabs/hadith/hadith_screen.dart';
 import 'package:islamy/home/tabs/quran/quran_screen.dart';
 import 'package:islamy/home/tabs/radio/radio_screen.dart';
-import 'package:islamy/home/tabs/sepha/sepha_screen.dart';
+import 'package:islamy/home/tabs/sebha/sebha_screen.dart';
 import 'package:islamy/home/tabs/time/time_screen.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
     List<Widget> currentTab = [
        QuranScreen(),
       HadithScreen(),
-      const SephaScreen(),
+       SebhaScreen(),
       const RadioScreen(),
       const TimeScreen()
     ];
