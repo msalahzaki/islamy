@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:islamy/home/home.dart';
-import 'package:islamy/intro_screen.dart';
 
 import 'core/utils/app_theme.dart';
 
