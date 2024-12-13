@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Widget> currentTab = [
        QuranScreen(),
-      const HadithScreen(),
+      HadithScreen(),
       const SephaScreen(),
       const RadioScreen(),
       const TimeScreen()

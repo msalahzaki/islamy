@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:islamy/home/tabs/quran/sura_screen.dart';
 import 'package:islamy/home/tabs/quran/widgets/recent_suras.dart';
 import 'package:islamy/home/tabs/quran/widgets/sura_list_tile.dart';
 import 'package:islamy/model/sura_model.dart';
-import 'package:islamy/model/suras_list.dart';
 
 import '../../../core/utils/app_color.dart';
 
