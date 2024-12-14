@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:islamy/core/utils/app_color.dart';
 import 'package:islamy/home/tabs/radio/widget/channel_card.dart';
+
+import '../../../model/chanel_model.dart';
 
 class RadioScreen extends StatefulWidget {
   const RadioScreen({super.key});
@@ -14,7 +13,7 @@ class RadioScreen extends StatefulWidget {
 }
 
 class _RadioScreenState extends State<RadioScreen> {
-  List<dynamic> radios = [];
+  List<ChanelModel> radios = [];
   String url = '';
   int selected = 0;
   int playedIndex = -1;
@@ -65,7 +64,8 @@ class _RadioScreenState extends State<RadioScreen> {
                         selected == 0 ? AppColor.black : AppColor.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.symmetric(horizontal: 70)),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * .15)),
                 child: const Text(
                   "Radio",
                   style: TextStyle(fontSize: 20),
@@ -84,7 +84,7 @@ class _RadioScreenState extends State<RadioScreen> {
                       selected == 1 ? AppColor.black : AppColor.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  padding: const EdgeInsets.symmetric(horizontal: 70),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .15),
                 ),
                 child: const Text(
                   "Reciters",
@@ -109,7 +109,7 @@ class _RadioScreenState extends State<RadioScreen> {
                     itemExtent: 150,
                     itemBuilder: (BuildContext context, int index) {
                       return ChannelCard(
-                        title: "${radios[index]['name']}",
+                        title: "${radios[index].name}",
                         index: index,
                         playPuaseFuction: playPuaseFuction,
                         volumeFuction: volumeFuction,
@@ -128,7 +128,7 @@ class _RadioScreenState extends State<RadioScreen> {
   playPuaseFuction(int index) {
     if (!(index == playedIndex)) {
       player.stop();
-      player.play(UrlSource(radios[index]['url']));
+      player.play(UrlSource(radios[index].url));
       playedIndex = index;
     } else {
       player.stop();
@@ -144,15 +144,7 @@ class _RadioScreenState extends State<RadioScreen> {
   }
 
   Future<void> fetchRadios() async {
-    final response = await http
-        .get(Uri.parse('https://mp3quran.net/api/v3/radios?language=ar'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        radios = jsonDecode(response.body)['radios'];
-      });
-    } else {
-      throw Exception('Failed to load radios');
-    }
+    radios = await RadioList.fetchRadios();
+    setState(() {});
   }
 }

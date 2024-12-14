@@ -1,4 +1,6 @@
+import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 
 class ChanelModel {
   final int id;
@@ -6,26 +8,26 @@ class ChanelModel {
   final String url;
   ChanelModel({required this.id, required this.name, required this.url});
 
-  factory ChanelModel.fromJson(Map<String, dynamic> json) {
-    return ChanelModel(
-      id: json['id'],
-      name: json['name'],
-      url: json['url'],
-    );
-  }
 }
 
 class RadioList {
-  final List<ChanelModel> radios;
+  static List<ChanelModel> radios = [];
 
-  RadioList({required this.radios});
-
-  factory RadioList.fromJson(Map<String, dynamic> json) {
-    var radioList = json['radios'] as List;
-    List<ChanelModel> radios = radioList.map((radio) {
-      return ChanelModel.fromJson(radio);
-    }).toList();
-    return RadioList(radios: radios);
+  static Future<List<ChanelModel>> fetchRadios() async {
+    final response = await http
+        .get(Uri.parse('https://mp3quran.net/api/v3/radios?language=ar'));
+    if (response.statusCode == 200) {
+      var resonse = jsonDecode(response.body)['radios'];
+      for (int i = 0; i < resonse.length; i++) {
+        radios.add(ChanelModel(
+            id: resonse[i]["id"],
+            name: resonse[i]["name"],
+            url: resonse[i]["url"]));
+      }
+      return radios;
+    } else {
+      throw Exception('Failed to load radios');
+    }
   }
 }
 

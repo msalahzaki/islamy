@@ -22,7 +22,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 50),
+      padding: const EdgeInsets.symmetric(vertical: 50),
       decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/images/SebhaBG.png'), // Your image file
@@ -33,8 +33,9 @@ class _SebhaScreenState extends State<SebhaScreen> {
           if (count > 33) {
             count = 0;
             zkarNum == widget.azkar.length - 1 ? zkarNum = 0 : zkarNum++;
-          } else
+          } else {
             count++;
+          }
 
           setState(() {});
         },
@@ -57,7 +58,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
             Image.asset("assets/images/Logo.png"),
             Text(
               widget.azkar[zkarNum],
-              style: TextStyle(color: AppColor.white, fontSize: 30),
+              style: const TextStyle(color: AppColor.white, fontSize: 30),
             ),
             SizedBox(
               height: size.height * 0.04,
@@ -75,8 +76,8 @@ class _SebhaScreenState extends State<SebhaScreen> {
                       width: 200,
                       child: Text(
                         widget.azkar[zkarNum],
-                        style: TextStyle(color: AppColor.white, fontSize: 40),
-
+                        style: const TextStyle(
+                            color: AppColor.white, fontSize: 40),
                       )),
                 ),
               ],
