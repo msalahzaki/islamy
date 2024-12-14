@@ -27,6 +27,7 @@ class _ChannelCardState extends State<ChannelCard> {
   IconData volumeIcon = Icons.volume_down;
   late String selectedImage;
 
+  @override
   void initState() {
     super.initState();
     // Calculate the random image once during widget initialization

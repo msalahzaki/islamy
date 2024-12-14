@@ -43,8 +43,8 @@ class _IntroScreenState extends State<IntroScreen> {
       showBackButton: true,
       showNextButton: true,
       showDoneButton: true,
-      onDone: () => Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home())),
+      onDone: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const Home())),
     );
   }
 
@@ -54,25 +54,27 @@ class _IntroScreenState extends State<IntroScreen> {
         bodyWidget: Column(
           children: [
             Image.asset("assets/images/introScreen/Logo.png"),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
                 height: 350,
                 child: Image.asset("assets/images/introScreen/$image.png")),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               title,
-              style: TextStyle(color: AppColor.primarycolor, fontSize: 24),
+              style:
+                  const TextStyle(color: AppColor.primarycolor, fontSize: 24),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
               subTitle,
-              style: TextStyle(color: AppColor.primarycolor, fontSize: 14),
+              style:
+                  const TextStyle(color: AppColor.primarycolor, fontSize: 14),
             ),
           ],
         ));

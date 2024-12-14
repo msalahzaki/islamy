@@ -7,7 +7,7 @@ import 'package:islamy/model/hadith_model.dart';
 import '../../../core/utils/app_color.dart';
 
 class HadithScreen extends StatefulWidget {
-  HadithScreen({super.key});
+  const HadithScreen({super.key});
 
   @override
   State<HadithScreen> createState() => _HadithScreenState();
@@ -84,7 +84,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                     0, // Position the left image near the top-left
                                 left: 0,
                                 child: ImageIcon(
-                                  AssetImage(
+                                  const AssetImage(
                                       "assets/images/SuraScreen/left.png"),
                                   size: size.width * 0.2,
                                   color: AppColor.semiblack,
@@ -97,7 +97,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                   ),
                                   Text(
                                     hadithList[itemIndex].title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 22,
                                         color: AppColor.black,
                                         fontWeight: FontWeight.bold),
@@ -110,7 +110,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                     softWrap: true,
                                     textDirection: TextDirection.rtl,
                                     hadithList[itemIndex].content,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 20, color: AppColor.black),
                                   )),
                                 ],

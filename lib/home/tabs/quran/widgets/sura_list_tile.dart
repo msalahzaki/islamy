@@ -4,8 +4,16 @@ import 'package:islamy/model/sura_model.dart';
 import '../sura_screen.dart';
 
 class SuraListTile extends StatelessWidget {
-  const SuraListTile({super.key, required this.sura});
- final SuraModel sura ;
+  const SuraListTile(
+      {super.key,
+      required this.sura,
+      required this.index,
+      required this.refreshrecent});
+
+  final SuraModel sura;
+  final int index;
+  final Function() refreshrecent;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -14,10 +22,12 @@ class SuraListTile extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => SuraScreen(
-                  arabicTitle: sura.arabicName,
-                  englishTitle: sura.englishName,
-                  number: sura.num,
-                )));
+                      arabicTitle: sura.arabicName,
+                      englishTitle: sura.englishName,
+                      number: sura.num,
+                    ))).then((_) {
+          refreshrecent();
+        });
       },
       leading: Stack(alignment: Alignment.center, children: [
         Image.asset(
@@ -27,13 +37,12 @@ class SuraListTile extends StatelessWidget {
         Text("${sura.num}")
       ]),
       title: Text(
-        "${sura.englishName}",
+        sura.englishName,
         style: const TextStyle(fontSize: 20),
       ),
       subtitle: Text("${sura.VersesNums} Verses",
           style: const TextStyle(fontSize: 14)),
-      trailing: Text("${sura.arabicName}",
-          style: const TextStyle(fontSize: 20)),
+      trailing: Text(sura.arabicName, style: const TextStyle(fontSize: 20)),
     );
   }
 }
