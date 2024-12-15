@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islamy/core/utils/app_color.dart';
 
 class HadithDetails extends StatefulWidget {
-  HadithDetails(
+  const HadithDetails(
       {super.key,
       required this.arabicTitle,
       this.englishTitle = " ",

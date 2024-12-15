@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islamy/core/utils/app_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SuraScreen extends StatefulWidget {
-  SuraScreen(
+  const SuraScreen(
       {super.key,
       required this.number,
       required this.arabicTitle,
@@ -19,16 +20,22 @@ class SuraScreen extends StatefulWidget {
 
 class _SuraScreenState extends State<SuraScreen> {
   late String content;
+
   @override
   void initState() {
     super.initState();
     content = '';
-    readAssetAndPrintFile();
+    readAssetAndPrintFile().then((_) => _updateRecentSuras());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -45,22 +52,22 @@ Size size = MediaQuery.of(context).size;
             alignment: Alignment.topRight,
             child: ImageIcon(
               const AssetImage("assets/images/SuraScreen/Right.png"),
-              size: size.width*0.2 ,
+              size: size.width * 0.2,
               color: AppColor.primarycolor,
             ),
           ),
-           Align(
+          Align(
             alignment: Alignment.topLeft,
             child: ImageIcon(
               const AssetImage("assets/images/SuraScreen/left.png"),
-              size: size.width*0.2 ,
+              size: size.width * 0.2,
               color: AppColor.primarycolor,
             ),
           ),
           Column(
             children: [
               SizedBox(
-                height: size.height*.02,
+                height: size.height * .02,
               ),
               Text(
                 widget.arabicTitle,
@@ -68,19 +75,20 @@ Size size = MediaQuery.of(context).size;
                     const TextStyle(color: AppColor.primarycolor, fontSize: 20),
               ),
               SizedBox(
-                height: size.height*.02,
+                height: size.height * .02,
               ),
               Expanded(
                 child: content.isNotEmpty
                     ? SingleChildScrollView(
                         child: Container(
-                      padding: const EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 30),
-                            child: Text( textAlign: TextAlign.justify,
-                          textDirection: TextDirection.rtl,
+                            child: Text(
+                                textAlign: TextAlign.justify,
+                                textDirection: TextDirection.rtl,
                                 style: const TextStyle(
                                     color: AppColor.primarycolor, fontSize: 16),
-                          content)),
+                                content)),
                       )
                     : const Center(
                         child: CircularProgressIndicator(
@@ -123,5 +131,16 @@ Size size = MediaQuery.of(context).size;
         .where((line) =>
             line.trim().isNotEmpty) // Remove empty or whitespace-only lines
         .toList();
+  }
+
+  _updateRecentSuras() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastIndex = prefs.getInt('last_index');
+
+    if (lastIndex != null) {
+      await prefs.setInt('prelast_index', lastIndex);
+    }
+
+    await prefs.setInt('last_index', widget.number - 1);
   }
 }
