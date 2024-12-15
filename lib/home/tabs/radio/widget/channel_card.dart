@@ -32,7 +32,7 @@ class _ChannelCardState extends State<ChannelCard> {
     super.initState();
     // Calculate the random image once during widget initialization
     selectedImage = (Random().nextInt(100) % 2 == 0)
-        ? 'assets/images/soundWave.png'
+        ? 'assets/images/SoundWave.png'
         : 'assets/images/SuraScreen/tail.png';
   }
 
