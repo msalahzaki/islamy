@@ -30,7 +30,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
       ),
       child: GestureDetector(
         onTap: () {
-          if (count > 33) {
+          if (count >= 33) {
             count = 0;
             zkarNum == widget.azkar.length - 1 ? zkarNum = 0 : zkarNum++;
           } else {
@@ -56,9 +56,9 @@ class _SebhaScreenState extends State<SebhaScreen> {
         child: Column(
           children: [
             Image.asset("assets/images/Logo.png"),
-            Text(
-              widget.azkar[zkarNum],
-              style: const TextStyle(color: AppColor.white, fontSize: 30),
+            const Text(
+              "سَبِّحِ اسْمَ رَبِّكَ الأعلى",
+              style: TextStyle(color: AppColor.white, fontSize: 30),
             ),
             SizedBox(
               height: size.height * 0.04,
@@ -67,19 +67,31 @@ class _SebhaScreenState extends State<SebhaScreen> {
               alignment: Alignment.center,
               children: [
                 Transform.rotate(
-                    angle: (count * 60) / 360,
+                    angle: (count * 65) / 360,
                     child: SizedBox(
                         width: 350,
                         child: Image.asset("assets/images/Sebha.png"))),
-                Center(
-                  child: SizedBox(
-                      width: 200,
-                      child: Text(
-                        widget.azkar[zkarNum],
-                        style: const TextStyle(
-                            color: AppColor.white, fontSize: 40),
-                      )),
-                ),
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  SizedBox(
+                    height: size.height * .05,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.45,
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      widget.azkar[zkarNum],
+                      style:
+                          const TextStyle(color: AppColor.white, fontSize: 36),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * .04,
+                  ),
+                  Text(
+                    "$count",
+                    style: const TextStyle(color: AppColor.white, fontSize: 30),
+                  ),
+                ]),
               ],
             )
           ],

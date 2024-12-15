@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/app_color.dart';
 
 class ChannelCard extends StatefulWidget {
-  ChannelCard(
+  const ChannelCard(
       {super.key,
       required this.playPuaseFuction,
       required this.volumeFuction,
@@ -32,7 +32,7 @@ class _ChannelCardState extends State<ChannelCard> {
     super.initState();
     // Calculate the random image once during widget initialization
     selectedImage = (Random().nextInt(100) % 2 == 0)
-        ? 'assets/images/soundWave.png'
+        ? 'assets/images/SoundWave.png'
         : 'assets/images/SuraScreen/tail.png';
   }
 
