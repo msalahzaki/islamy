@@ -65,7 +65,7 @@ class _RadioScreenState extends State<RadioScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.width * .15)),
+                        EdgeInsets.symmetric(horizontal: size.width * .146)),
                 child: const Text(
                   "Radio",
                   style: TextStyle(fontSize: 20),
@@ -84,7 +84,7 @@ class _RadioScreenState extends State<RadioScreen> {
                       selected == 1 ? AppColor.black : AppColor.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.symmetric(horizontal: size.width * .15),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .146),
                 ),
                 child: const Text(
                   "Reciters",
