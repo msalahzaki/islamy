@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 import 'package:islamy/model/sura_model.dart';
 
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_color.dart';
 import '../sura_screen.dart';
 
@@ -65,15 +67,13 @@ class _RecentSurasState extends State<RecentSuras> {
                       children: [
                         Text(
                           englishName,
-                          style: const TextStyle(color: AppColor.black),
+                          style: AppStyles.bold24black,
                         ),
-                        Text(arabicName,
-                            style: const TextStyle(color: AppColor.black)),
-                        Text(versesNum,
-                            style: const TextStyle(color: AppColor.black)),
+                        Text(arabicName, style: AppStyles.bold24black),
+                        Text('$versesNum Verses', style: AppStyles.bold14black),
                       ],
                     ),
-                    Image.asset("assets/images/Sura_image.png")
+                    Image.asset(AppAssets.Sura_image)
                   ],
                 ),
               ),
@@ -91,15 +91,13 @@ class _RecentSurasState extends State<RecentSuras> {
                     children: [
                       Text(
                         englishName2,
-                        style: const TextStyle(color: AppColor.black),
+                        style: AppStyles.bold24black,
                       ),
-                      Text(arabicName2,
-                          style: const TextStyle(color: AppColor.black)),
-                      Text(versesNum2,
-                          style: const TextStyle(color: AppColor.black)),
+                      Text(arabicName2, style: AppStyles.bold24black),
+                      Text('$versesNum2 Verses', style: AppStyles.bold14black),
                     ],
                   ),
-                  Image.asset("assets/images/Sura_image.png")
+                  Image.asset(AppAssets.Sura_image)
                 ],
               ),
             )

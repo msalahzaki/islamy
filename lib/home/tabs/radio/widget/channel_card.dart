@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_color.dart';
 
 class ChannelCard extends StatefulWidget {
@@ -31,9 +33,7 @@ class _ChannelCardState extends State<ChannelCard> {
   void initState() {
     super.initState();
     // Calculate the random image once during widget initialization
-    selectedImage = (Random().nextInt(100) % 2 == 0)
-        ? 'assets/images/SoundWave.png'
-        : 'assets/images/SuraScreen/tail.png';
+    selectedImage = (Random().nextInt(100) % 2 == 0) ? AppAssets.SoundWave : AppAssets.tail;
   }
 
   @override
@@ -51,10 +51,7 @@ class _ChannelCardState extends State<ChannelCard> {
             alignment: Alignment.topCenter,
             child: Text(
               widget.title,
-              style: const TextStyle(
-                  color: AppColor.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w500),
+              style: AppStyles.bold24black,
             ),
           ),
           Image.asset(

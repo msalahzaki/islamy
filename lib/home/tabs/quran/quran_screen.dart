@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 import 'package:islamy/home/tabs/quran/widgets/recent_suras.dart';
 import 'package:islamy/home/tabs/quran/widgets/sura_list_tile.dart';
 import 'package:islamy/model/sura_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_color.dart';
 
 class QuranScreen extends StatefulWidget {
@@ -29,15 +31,15 @@ class _QuranScreenState extends State<QuranScreen> {
     getRecentindex();
     return Container(
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/QuranBG.png'), // Your image file
+              image: AssetImage(AppAssets.QuranBG), // Your image file
               fit: BoxFit.cover),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: Image.asset("assets/images/Logo.png")),
+            Center(child: Image.asset(AppAssets.Logo)),
             TextField(
               onChanged: (value) {
                 keyword = value;
@@ -51,6 +53,7 @@ class _QuranScreenState extends State<QuranScreen> {
                   color: AppColor.primarycolor,
                 ),
                 hintText: "Sura Name",
+                hintStyle: AppStyles.bold16gold,
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
@@ -64,7 +67,7 @@ class _QuranScreenState extends State<QuranScreen> {
             const SizedBox(
               height: 20,
             ),
-            if (show) const Text("Most Recent"),
+            if (show) Text("Most Recent", style: AppStyles.bold16gold),
             const SizedBox(
               height: 10,
             ),
@@ -73,7 +76,7 @@ class _QuranScreenState extends State<QuranScreen> {
                 last_index: this.last_index,
                 prelast_index: this.prelast_index),
             const SizedBox(height: 10),
-            if (show) const Text("Suras List"),
+            if (show) Text("Suras List", style: AppStyles.bold16gold),
             if (show) const SizedBox(height: 15),
             Expanded(
                 child: ListView.builder(

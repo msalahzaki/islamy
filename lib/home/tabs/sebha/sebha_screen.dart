@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:islamy/core/utils/app_color.dart';
+import 'package:islamy/core/utils/app_styles.dart';
+
+import '../../../core/utils/app_assets.dart';
 
 class SebhaScreen extends StatefulWidget {
   SebhaScreen({super.key});
@@ -23,9 +25,9 @@ class _SebhaScreenState extends State<SebhaScreen> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 50),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/SebhaBG.png'), // Your image file
+            image: AssetImage(AppAssets.SebhaBG), // Your image file
             fit: BoxFit.cover),
       ),
       child: GestureDetector(
@@ -55,10 +57,10 @@ class _SebhaScreenState extends State<SebhaScreen> {
         },
         child: Column(
           children: [
-            Image.asset("assets/images/Logo.png"),
-            const Text(
+            Image.asset(AppAssets.Logo),
+            Text(
               "سَبِّحِ اسْمَ رَبِّكَ الأعلى",
-              style: TextStyle(color: AppColor.white, fontSize: 30),
+              style: AppStyles.bold36white,
             ),
             SizedBox(
               height: size.height * 0.04,
@@ -66,11 +68,18 @@ class _SebhaScreenState extends State<SebhaScreen> {
             Stack(
               alignment: Alignment.center,
               children: [
+                // AnimatedRotation(
+                //   turns: (count * 11) / 360,
+                //   duration: Duration(seconds: 1),
+                //    child : SizedBox(
+                //                         width: 350,
+                //                         child: Image.asset(AppAssets.Sebha)),
+                // ),
+
                 Transform.rotate(
                     angle: (count * 65) / 360,
                     child: SizedBox(
-                        width: 350,
-                        child: Image.asset("assets/images/Sebha.png"))),
+                        width: 350, child: Image.asset(AppAssets.Sebha))),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   SizedBox(
                     height: size.height * .05,
@@ -80,8 +89,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
                     child: Text(
                       textAlign: TextAlign.center,
                       widget.azkar[zkarNum],
-                      style:
-                          const TextStyle(color: AppColor.white, fontSize: 36),
+                      style: AppStyles.bold36white,
                     ),
                   ),
                   SizedBox(
@@ -89,7 +97,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
                   ),
                   Text(
                     "$count",
-                    style: const TextStyle(color: AppColor.white, fontSize: 30),
+                    style: AppStyles.bold36white,
                   ),
                 ]),
               ],

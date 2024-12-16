@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islamy/core/utils/app_color.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../core/utils/app_assets.dart';
 
 class SuraScreen extends StatefulWidget {
   const SuraScreen(
@@ -40,6 +43,7 @@ class _SuraScreenState extends State<SuraScreen> {
       appBar: AppBar(
         title: Text(
           widget.englishTitle,
+          style: AppStyles.bold20primary,
         ),
       ),
       body: Stack(
@@ -47,11 +51,11 @@ class _SuraScreenState extends State<SuraScreen> {
         children: [
           Align(
               alignment: Alignment.bottomCenter,
-              child: Image.asset("assets/images/SuraScreen/tail.png")),
+              child: Image.asset(AppAssets.tail)),
           Align(
             alignment: Alignment.topRight,
             child: ImageIcon(
-              const AssetImage("assets/images/SuraScreen/Right.png"),
+              AssetImage(AppAssets.Right),
               size: size.width * 0.2,
               color: AppColor.primarycolor,
             ),
@@ -59,7 +63,7 @@ class _SuraScreenState extends State<SuraScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: ImageIcon(
-              const AssetImage("assets/images/SuraScreen/left.png"),
+              AssetImage(AppAssets.left),
               size: size.width * 0.2,
               color: AppColor.primarycolor,
             ),
@@ -71,8 +75,7 @@ class _SuraScreenState extends State<SuraScreen> {
               ),
               Text(
                 widget.arabicTitle,
-                style:
-                    const TextStyle(color: AppColor.primarycolor, fontSize: 20),
+                style: AppStyles.bold24primary,
               ),
               SizedBox(
                 height: size.height * .02,
@@ -86,8 +89,7 @@ class _SuraScreenState extends State<SuraScreen> {
                             child: Text(
                                 textAlign: TextAlign.justify,
                                 textDirection: TextDirection.rtl,
-                                style: const TextStyle(
-                                    color: AppColor.primarycolor, fontSize: 16),
+                                style: AppStyles.bold20primary,
                                 content)),
                       )
                     : const Center(

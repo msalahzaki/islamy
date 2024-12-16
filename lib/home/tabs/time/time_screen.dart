@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 
+import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_color.dart';
 import '../../../model/parytime_model.dart';
 
@@ -25,30 +27,29 @@ class _TimeScreenState extends State<TimeScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/TimeBG.png'), // Your image file
+            image: AssetImage(AppAssets.TimeBG), // Your image file
             fit: BoxFit.cover),
       ),
       child: Column(
         children: [
-          Image.asset("assets/images/Logo.png"),
+          Image.asset(AppAssets.Logo),
           Padding(
             padding: const EdgeInsets.all(15),
             child: Container(
               width: double.infinity,
               height: size.height * .35,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-                color: Color(0xff856b3f),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(40)),
+                color: const Color(0xff856b3f),
                 image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/Time_Widget_BG.png'), // Your image file
+                    image: AssetImage(AppAssets.Time_Widget_BG),
                     fit: BoxFit.fill),
               ),
               child: praytime == null
-                  ? Center(
-                      child: const CircularProgressIndicator(
+                  ? const Center(
+                      child: CircularProgressIndicator(
                       color: AppColor.white,
                     ))
                   : Stack(
@@ -76,7 +77,17 @@ class _TimeScreenState extends State<TimeScreen> {
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  children: [Text(key), Text(value)],
+                                  children: [
+                                    Text(
+                                      key,
+                                      style: AppStyles.bold16white,
+                                    ),
+                                    Text(
+                                      value,
+                                      style: AppStyles.bold36white
+                                          .copyWith(fontSize: 30),
+                                    )
+                                  ],
                                 ),
                               );
                             },
@@ -94,24 +105,18 @@ class _TimeScreenState extends State<TimeScreen> {
                               width: 60,
                               child: Text(
                                 praytime!.date,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
+                                style: AppStyles.bold16white,
                               ),
                             ),
                             Column(
                               children: [
-                                const Text(
+                                Text(
                                   "   Pray Time",
-                                  style: TextStyle(
-                                      color: Color(0xff856b3f), fontSize: 20),
+                                  style: AppStyles.bold20semiprimary,
                                 ),
                                 Text(
                                   praytime!.day,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      color: AppColor.black,
-                                      fontWeight: FontWeight.w800),
-                                ),
+                                    style: AppStyles.bold20black),
                               ],
                             ),
                             SizedBox(
@@ -119,8 +124,7 @@ class _TimeScreenState extends State<TimeScreen> {
                               child: Text(
                                 praytime!.HajriDate,
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
+                                style: AppStyles.bold16white,
                               ),
                             ),
                           ],
