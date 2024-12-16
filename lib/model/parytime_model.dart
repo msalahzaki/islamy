@@ -2,29 +2,39 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class ParytimeModel {
-  final int id;
-  final String name;
-  final String url;
+class PraytimeModel {
+  final Map<String, dynamic> timings;
+  final String date;
+  final String HajriDate;
+  final String day;
 
-  ParytimeModel({required this.id, required this.name, required this.url});
+  PraytimeModel(
+      {required this.timings,
+      required this.date,
+      required this.HajriDate,
+      required this.day});
 }
 
-class RadioList {
-  static List<ParytimeModel> radios = [];
+class PrayTime {
+  static Future<PraytimeModel> fetchParyTimeData() async {
+    DateTime now = DateTime.now();
+    String date = "${now.day}-${now.month}-${now.year}";
 
-  static Future<List<ParytimeModel>> fetchRadios() async {
-    final response = await http
-        .get(Uri.parse('https://mp3quran.net/api/v3/radios?language=ar'));
+    final response = await http.get(Uri.parse(
+        'https://api.aladhan.com/v1/timingsByCity/$date?city=alexandria&country=egypt'));
     if (response.statusCode == 200) {
-      var resonse = jsonDecode(response.body)['radios'];
-      for (int i = 0; i < resonse.length; i++) {
-        radios.add(ParytimeModel(
-            id: resonse[i]["id"],
-            name: resonse[i]["name"],
-            url: resonse[i]["url"]));
-      }
-      return radios;
+      var resonse = jsonDecode(response.body)['data'];
+
+      return PraytimeModel(
+        timings: resonse["timings"],
+        date: resonse["date"]["readable"],
+        HajriDate: resonse["date"]["hijri"]["day"] +
+            " " +
+            resonse["date"]["hijri"]["month"]["en"] +
+            " " +
+            resonse["date"]["hijri"]["year"],
+        day: resonse["date"]["gregorian"]["weekday"]["en"],
+      );
     } else {
       throw Exception('Failed to load radios');
     }
