@@ -33,7 +33,7 @@ class _ChannelCardState extends State<ChannelCard> {
   void initState() {
     super.initState();
     // Calculate the random image once during widget initialization
-    selectedImage = (Random().nextInt(100) % 2 == 0) ? AppAssets.SoundWave : AppAssets.tail;
+selectedImage = (Random().nextInt(100) % 2 == 0) ? AppAssets.SoundWave : AppAssets.tail;
   }
 
   @override
