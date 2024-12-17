@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 import 'package:islamy/home/tabs/hadith/hadith_details.dart';
 import 'package:islamy/model/hadith_model.dart';
 
+import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_color.dart';
 
 class HadithScreen extends StatefulWidget {
@@ -22,14 +24,13 @@ class _HadithScreenState extends State<HadithScreen> {
     Size size = MediaQuery.of(context).size;
     return Container(
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-              image:
-                  AssetImage('assets/images/HadithBG.png'), // Your image file
+              image: AssetImage(AppAssets.HadithBG), // Your image file
               fit: BoxFit.cover),
         ),
         child: Column(children: [
-          Center(child: Image.asset("assets/images/Logo.png")),
+          Center(child: Image.asset(AppAssets.Logo)),
           hadithList.isNotEmpty
               ? Expanded(
                   child: CarouselSlider.builder(
@@ -64,7 +65,7 @@ class _HadithScreenState extends State<HadithScreen> {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Image.asset(
-                                  "assets/images/SuraScreen/tail.png",
+                                  AppAssets.tail,
                                   width: size.width * 0.7,
                                 ),
                               ),
@@ -73,8 +74,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                     0, // Position the right image near the top-right
                                 right: 0,
                                 child: ImageIcon(
-                                  const AssetImage(
-                                      "assets/images/SuraScreen/Right.png"),
+                                  AssetImage(AppAssets.Right),
                                   size: size.width * 0.2,
                                   color: AppColor.semiblack,
                                 ),
@@ -84,8 +84,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                     0, // Position the left image near the top-left
                                 left: 0,
                                 child: ImageIcon(
-                                  const AssetImage(
-                                      "assets/images/SuraScreen/left.png"),
+                                  AssetImage(AppAssets.left),
                                   size: size.width * 0.2,
                                   color: AppColor.semiblack,
                                 ),
@@ -97,10 +96,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                   ),
                                   Text(
                                     hadithList[itemIndex].title,
-                                    style: const TextStyle(
-                                        fontSize: 22,
-                                        color: AppColor.black,
-                                        fontWeight: FontWeight.bold),
+                                    style: AppStyles.bold24black,
                                   ),
                                   SizedBox(
                                     height: size.height * .03,
@@ -110,9 +106,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                     softWrap: true,
                                     textDirection: TextDirection.rtl,
                                     hadithList[itemIndex].content,
-                                    style: const TextStyle(
-                                        fontSize: 20, color: AppColor.black),
-                                  )),
+                                          style: AppStyles.bold16black)),
                                 ],
                               )
                             ],

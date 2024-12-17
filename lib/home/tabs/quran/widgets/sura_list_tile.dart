@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islamy/core/utils/app_styles.dart';
 import 'package:islamy/model/sura_model.dart';
 
 import '../sura_screen.dart';
@@ -32,17 +33,24 @@ class SuraListTile extends StatelessWidget {
       leading: Stack(alignment: Alignment.center, children: [
         Image.asset(
           "assets/icons/Surra_num.png",
-          height: 40,
+          height: 52,
         ),
-        Text("${sura.num}")
+        Text(
+          "${sura.num}",
+          style: AppStyles.bold20white.copyWith(fontSize: 16),
+        )
       ]),
       title: Text(
         sura.englishName,
-        style: const TextStyle(fontSize: 20),
+        style: AppStyles.bold20white,
       ),
       subtitle: Text("${sura.VersesNums} Verses",
-          style: const TextStyle(fontSize: 14)),
-      trailing: Text(sura.arabicName, style: const TextStyle(fontSize: 20)),
+        style: AppStyles.bold14white,
+      ),
+      trailing: Text(
+        sura.arabicName,
+        style: AppStyles.bold20white,
+      ),
     );
   }
 }

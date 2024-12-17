@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:islamy/core/utils/app_color.dart';
 import 'package:islamy/home/tabs/radio/widget/channel_card.dart';
 
+import '../../../core/utils/app_assets.dart';
 import '../../../model/chanel_model.dart';
 
 class RadioScreen extends StatefulWidget {
@@ -38,17 +39,16 @@ class _RadioScreenState extends State<RadioScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/RadioBG.png'), // Your image file
+            image: AssetImage(AppAssets.RadioBG), // Your image file
             fit: BoxFit.cover),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-              height: size.height * .25,
-              child: Image.asset("assets/images/Logo.png")),
+              height: size.height * .25, child: Image.asset(AppAssets.Logo)),
           const SizedBox(
             height: 20,
           ),
@@ -65,7 +65,7 @@ class _RadioScreenState extends State<RadioScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.width * .15)),
+                        EdgeInsets.symmetric(horizontal: size.width * .146)),
                 child: const Text(
                   "Radio",
                   style: TextStyle(fontSize: 20),
@@ -84,7 +84,7 @@ class _RadioScreenState extends State<RadioScreen> {
                       selected == 1 ? AppColor.black : AppColor.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.symmetric(horizontal: size.width * .15),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .146),
                 ),
                 child: const Text(
                   "Reciters",
